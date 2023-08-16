@@ -4,7 +4,7 @@ from base.API.api import (get_all_user_info, get_random_id_and_email, get_posts_
 from base.retry import retry
 
 
-@pytest.mark.API
+@pytest.mark.api
 class TestAPI:
     @allure.title('Get random ID and email')
     @retry(max_attempts=2, delay=2) # We could use such libraries as flaky or rerunfailures to rerun flaky tests, or here is my own decorator
