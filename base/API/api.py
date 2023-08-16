@@ -3,14 +3,21 @@ import requests
 from base.API.api_routes import APIRoutes
 import random
 import json
+import logging
 
+
+# Configure the logger
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 @allure.step("Getting all users info")
 def get_all_user_info():
+    logging.info("Starting API test...")
     # Get all users info
+    logging.info("Sending a GET request for users info...")
     get_user_info_response = requests.get(APIRoutes.users_url)
 
     # Check status code value
+    logging.info(f"Get user info response: {get_user_info_response.status_code}")
     assert get_user_info_response.status_code == 200, f'Status code != 200, actual status_code = {get_user_info_response.status_code}'
     return get_user_info_response
 
@@ -35,9 +42,11 @@ def get_random_id_and_email(get_user_info_response):
 def get_posts_by_user_id(user_id: int):
     # Get all posts for selected user_id
     params = {"userId": user_id}
+    logging.info("Sending a GET request for user posts")
     get_posts_response = requests.get(APIRoutes.posts_url, params=params)
 
     # Check status code value
+    logging.info(f"Get user posts response: {get_posts_response.status_code}")
     assert get_posts_response.status_code == 200, f'Status code != 200, actual status_code = {get_posts_response.status_code}'
     return get_posts_response
 
@@ -61,7 +70,9 @@ def make_new_post_for_user(user_id: int):
             }
 
     # Make a post request
+    logging.info("Sending a POST request for a new user's post...")
     response_for_post_request = requests.post(APIRoutes.posts_url, json=data, headers=headers)
 
     # Check status code value
+    logging.info(f"Response for post request: {response_for_post_request.status_code}")
     assert response_for_post_request.status_code == 201, f'Status code != 201, actual status_code = {response_for_post_request.status_code}'
