@@ -1,9 +1,10 @@
 logs
 *.log
 *.png
+*.csv
 __pycache__/
 .pytest_cache/
-.allure-results
+Report
 /venv/
 .idea/
 .vscode/

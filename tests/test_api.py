@@ -1,10 +1,13 @@
 import allure
-from base.API.api import (get_all_user_info, get_random_id_and_email, get_posts_by_user_id, verify_postid)
+import pytest
+from base.API.api import (get_all_user_info, get_random_id_and_email, get_posts_by_user_id, verify_post_id, make_new_post_for_user)
 
+@pytest.mark.API
 class TestAPI:
     @allure.title('Get random ID and email')
-    def test_get_random_id(self):
+    def test_rest_api_test(self):
         get_user_info_response = get_all_user_info()
-        userID = get_random_id_and_email(get_user_info_response)
-        get_posts_response = get_posts_by_user_id(userID)
-        verify_postid(get_posts_response)
+        user_id = get_random_id_and_email(get_user_info_response)
+        get_posts_response = get_posts_by_user_id(user_id)
+        verify_post_id(get_posts_response)
+        make_new_post_for_user(user_id)
