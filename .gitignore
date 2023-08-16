@@ -1,0 +1,11 @@
+logs
+*.log
+*.png
+__pycache__/
+.pytest_cache/
+.allure-results
+/venv/
+.idea/
+.vscode/
+*.sw*
+.archived_logs/
