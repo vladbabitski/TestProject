@@ -1,25 +1,28 @@
 import pika
+import os
 
-# Define the mock data
-mock_data = [
-    {"id": 1, "name": "Vladislav"},
-    {"id": 2, "name": "Victoria"},
-    {"id": 3, "name": "Svetlana"}
-]
 
-# Connection parameters
-credentials = pika.PlainCredentials('login', 'pass')
-parameters = pika.ConnectionParameters('127.0.0.1', credentials=credentials)
-connection = pika.BlockingConnection(parameters)
-channel = connection.channel()
+def publish_mock_data():
+    # Define the mock data
+    mock_data = [
+        {"id": 1, "name": "Vladislav"},
+        {"id": 2, "name": "Victoria"},
+        {"id": 3, "name": "Svetlana"}
+    ]
 
-# Declare the queue
-queue_name = 'test_queue'
-channel.queue_declare(queue=queue_name)
+    # Connection parameters
+    credentials = pika.PlainCredentials(os.getenv('LOGIN'), os.getenv('PASSWORD'))
+    parameters = pika.ConnectionParameters(os.getenv('DB_ADDRESS'), credentials=credentials)
+    connection = pika.BlockingConnection(parameters)
+    channel = connection.channel()
 
-# Publish mock data to the queue
-for data in mock_data:
-    channel.basic_publish(exchange='', routing_key=queue_name, body=str(data))
+    # Declare the queue
+    queue_name = os.getenv("QUEUE_NAME")
+    channel.queue_declare(queue=queue_name)
 
-# Close the connection
-connection.close()
+    # Publish mock data to the queue
+    for data in mock_data:
+        channel.basic_publish(exchange='', routing_key=queue_name, body=str(data))
+
+    # Close the connection
+    connection.close()

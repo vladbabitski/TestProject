@@ -1,11 +1,6 @@
-logs
 *.log
-*.png
 *.csv
 __pycache__/
 .pytest_cache/
 /venv/
 .idea/
-.vscode/
-*.sw*
-.archived_logs/

@@ -2,7 +2,14 @@ import allure
 import pytest
 from base.API.api import (get_all_user_info, get_random_id_and_email, get_posts_by_user_id, verify_post_id, make_new_post_for_user)
 from base.retry import retry
+from logging_config import configure_logger
+import logging
 
+# Вызов функции для настройки логгера
+configure_logger()
+
+# Теперь можно использовать логгер в этом модуле и других модулях
+logger = logging.getLogger("TestProject")
 
 @pytest.mark.api
 class TestAPI:

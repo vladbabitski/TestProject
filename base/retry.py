@@ -1,3 +1,4 @@
+import logging
 import time
 
 def retry(max_attempts, delay=1):
@@ -9,8 +10,8 @@ def retry(max_attempts, delay=1):
                     return func(*args, **kwargs)
                 except Exception as e:
                     attempts += 1
-                    print(f"Attempt {attempts} failed: {e}")
+                    logging.info(f"Attempt {attempts} failed: {e}")
                     time.sleep(delay)
-            print(f"Function failed after {max_attempts} attempts")
+            logging.info(f"Function failed after {max_attempts} attempts")
         return wrapper
     return decorator

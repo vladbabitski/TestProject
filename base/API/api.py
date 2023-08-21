@@ -1,17 +1,16 @@
 import allure
 import requests
 from base.API.api_routes import APIRoutes
+from base.API.users_validation import (validate_api_response)
 import random
 import json
 import logging
 
 
-# Configure the logger
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-
 @allure.step("Getting all users info")
 def get_all_user_info():
     logging.info("Starting API test...")
+
     # Get all users info
     logging.info("Sending a GET request for users info...")
     get_user_info_response = requests.get(APIRoutes.users_url)
@@ -19,8 +18,10 @@ def get_all_user_info():
     # Check status code value
     logging.info(f"Get user info response: {get_user_info_response.status_code}")
     assert get_user_info_response.status_code == 200, f'Status code != 200, actual status_code = {get_user_info_response.status_code}'
-    return get_user_info_response
 
+    # Validate api response
+    validate_api_response(get_user_info_response)
+    return get_user_info_response
 
 @allure.step("Getting random user_id and it's email")
 def get_random_id_and_email(get_user_info_response):
@@ -33,7 +34,7 @@ def get_random_id_and_email(get_user_info_response):
     user_id = random_user_id_data['id']
     email = random_user_id_data['email']
 
-    # Attacking email to allure report
+    # Attaching email to allure report
     allure.attach(f"{email}", name="Email", attachment_type=allure.attachment_type.TEXT)
     return user_id
 
