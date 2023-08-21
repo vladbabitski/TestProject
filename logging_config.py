@@ -1,25 +1,43 @@
 import logging
+import os
+import allure
+import pytest
 
-def configure_logger():
-    # Создание объекта логгера
-    logger = logging.getLogger("TestProject")
+def setup_custom_logger(name):
+    # Set formatting for log messages
+    formatter = logging.Formatter(fmt='%(asctime)s - %(levelname)s - %(module)s - %(message)s')
 
-    # Установка уровня журналирования
-    logger.setLevel(logging.WARNING)
+    # Creating a handler for outputting logs to the console
+    handler = logging.StreamHandler()
+    handler.setFormatter(formatter)
 
-    # Создание обработчика для вывода логов в консоль
-    console_handler = logging.StreamHandler()
-    console_handler.setLevel(logging.WARNING)
+    # Creating a handler for outputting logs to the log file
+    logs_dir = os.path.dirname(__file__)
+    log_file_path = os.path.join(logs_dir, 'TestProject.log')
+    filehandler = logging.FileHandler(log_file_path)
+    filehandler.setLevel(logging.DEBUG)
 
-    # Создание форматирования для сообщений лога
-    log_format = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
-    console_handler.setFormatter(log_format)
+    # Creating a logger object
+    logger = logging.getLogger(name)
+    logger.setLevel(logging.DEBUG)
+    logger.addHandler(handler)
+    logger.addHandler(filehandler)
+    return logger
 
-    # Добавление обработчика к логгеру
-    logger.addHandler(console_handler)
 
-    file_handler = logging.FileHandler("TestProject.log")
-    file_handler.setLevel(logging.DEBUG)
-    file_handler.setFormatter(log_format)
+@pytest.fixture(scope="session", autouse=True)
+def attach_log_file():
+    # Define log file path
+    log_file_path = os.path.join(os.path.dirname(__file__)+'\\TestProject.log')
 
-    logger.addHandler(file_handler)
+    # Read the log file
+    with open(log_file_path, "r") as log_file:
+        log_content = log_file.read()
+        log_file.close()
+    # Attach log to allure
+    allure.attach(log_content, name="Log File", attachment_type=allure.attachment_type.TEXT)
+
+    # Clear the log
+    with open(log_file_path, "w") as log_file:
+        log_file.write("")
+        log_file.close()
