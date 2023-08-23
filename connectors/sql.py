@@ -1,6 +1,7 @@
 import sqlite3
 import os
 
+
 def insert_mock_data_into_db():
     # Define the mock data
     mock_data = [
@@ -29,6 +30,6 @@ def insert_mock_data_into_db():
     cursor.close()
     conn.close()
 
+
 # Call the method to insert the mock data
 insert_mock_data_into_db()
-

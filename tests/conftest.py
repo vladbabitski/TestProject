@@ -3,7 +3,9 @@ import os
 import allure
 import pytest
 
-def setup_custom_logger(name):
+
+@pytest.fixture(scope="session")
+def setup_custom_logger():
     # Set formatting for log messages
     formatter = logging.Formatter(fmt='%(asctime)s - %(levelname)s - %(module)s - %(message)s')
 
@@ -13,20 +15,24 @@ def setup_custom_logger(name):
 
     # Creating a handler for outputting logs to the log file
     logs_dir = os.path.dirname(__file__)
-    log_file_path = os.path.join(logs_dir, 'TestProject.log')
+    log_file_path = os.path.join(logs_dir + '\\TestProject.log')
     filehandler = logging.FileHandler(log_file_path)
     filehandler.setLevel(logging.DEBUG)
+    filehandler.setFormatter(formatter)
 
     # Creating a logger object
-    logger = logging.getLogger(name)
+    logger = logging.getLogger('root')
     logger.setLevel(logging.DEBUG)
     logger.addHandler(handler)
     logger.addHandler(filehandler)
-    return logger
+
+    logger.info('Logger is set up')
+    yield logger
 
 
 @pytest.fixture(scope="session", autouse=True)
-def attach_log_file():
+def attach_log_file(setup_custom_logger):
+    yield setup_custom_logger
     # Define log file path
     log_file_path = os.path.join(os.path.dirname(__file__)+'\\TestProject.log')
 

@@ -1,6 +1,8 @@
 import logging
 import time
 
+
+# We could use such libraries as flaky or rerunfailures to rerun flaky tests, or here is my own decorator
 def retry(max_attempts, delay=1):
     def decorator(func):
         def wrapper(*args, **kwargs):
