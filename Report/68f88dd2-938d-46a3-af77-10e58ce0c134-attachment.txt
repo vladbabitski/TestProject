@@ -1,0 +1,15 @@
+[32mINFO    [0m root:conftest.py:28 Logger is set up
+[32mINFO    [0m root:api.py:12 Starting API test...
+[32mINFO    [0m root:api.py:15 Sending a GET request for users info...
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:1048 Starting new HTTPS connection (1): jsonplaceholder.typicode.com:443
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:546 https://jsonplaceholder.typicode.com:443 "GET /users/ HTTP/1.1" 200 None
+[32mINFO    [0m root:api.py:19 Get user info response: 200
+[32mINFO    [0m root:users_validation.py:47 Data is valid
+[32mINFO    [0m root:api.py:46 Sending a GET request for user posts
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:1048 Starting new HTTPS connection (1): jsonplaceholder.typicode.com:443
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:546 https://jsonplaceholder.typicode.com:443 "GET /posts/?userId=9 HTTP/1.1" 200 None
+[32mINFO    [0m root:api.py:50 Get user posts response: 200
+[32mINFO    [0m root:api.py:74 Sending a POST request for a new user's post...
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:1048 Starting new HTTPS connection (1): jsonplaceholder.typicode.com:443
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:546 https://jsonplaceholder.typicode.com:443 "POST /posts/ HTTP/1.1" 201 147
+[32mINFO    [0m root:api.py:78 Response for post request: 201

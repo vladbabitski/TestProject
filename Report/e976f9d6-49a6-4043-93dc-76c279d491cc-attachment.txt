@@ -1,0 +1,15 @@
+2023-08-21 17:15:26,201 - INFO - conftest - Logger is set up
+2023-08-21 17:15:26,201 - INFO - api - Starting API test...
+2023-08-21 17:15:26,202 - INFO - api - Sending a GET request for users info...
+2023-08-21 17:15:26,203 - DEBUG - connectionpool - Starting new HTTPS connection (1): jsonplaceholder.typicode.com:443
+2023-08-21 17:15:26,392 - DEBUG - connectionpool - https://jsonplaceholder.typicode.com:443 "GET /users/ HTTP/1.1" 200 None
+2023-08-21 17:15:26,394 - INFO - api - Get user info response: 200
+2023-08-21 17:15:26,394 - INFO - users_validation - Data is valid
+2023-08-21 17:15:26,395 - INFO - api - Sending a GET request for user posts
+2023-08-21 17:15:26,396 - DEBUG - connectionpool - Starting new HTTPS connection (1): jsonplaceholder.typicode.com:443
+2023-08-21 17:15:26,580 - DEBUG - connectionpool - https://jsonplaceholder.typicode.com:443 "GET /posts/?userId=9 HTTP/1.1" 200 None
+2023-08-21 17:15:26,580 - INFO - api - Get user posts response: 200
+2023-08-21 17:15:26,580 - INFO - api - Sending a POST request for a new user's post...
+2023-08-21 17:15:26,581 - DEBUG - connectionpool - Starting new HTTPS connection (1): jsonplaceholder.typicode.com:443
+2023-08-21 17:15:26,910 - DEBUG - connectionpool - https://jsonplaceholder.typicode.com:443 "POST /posts/ HTTP/1.1" 201 147
+2023-08-21 17:15:26,910 - INFO - api - Response for post request: 201
